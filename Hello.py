@@ -20,32 +20,68 @@ LOGGER = get_logger(__name__)
 
 def run():
     st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
+    
     )
 
-    st.write("# Welcome to Streamlit! 👋")
-
-    st.sidebar.success("Select a demo above.")
-
-    st.markdown(
-        """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
-    )
-
+    st.write("# Metode Klasterisasi ")
 
 if __name__ == "__main__":
     run()
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+data = np.array([
+    [516.012706, 393.014514],
+    [436.211762, 408.656585],
+    [512.052601, 372.022014],
+    [489.140464, 401.807159],
+    [446.207986, 338.516682]
+])
+
+index = np.array(['0', '1', '2', '3', '4'])
+
+columns = np.array(['X', 'Y',])
+
+objek = pd.DataFrame(data=data, index=index, columns=columns)
+objek
+
+df = pd.DataFrame(np.random.randn(50, 20), columns=("col %d" % i for i in range(20)))
+
+st.dataframe(df)  # Same as st.write(df)
+
+chart_data = pd.DataFrame(
+   {
+       "col1": np.random.randn(20),
+       "col2": np.random.randn(20),
+       "col3": np.random.choice(["A", "B", "C"], 20),
+   }
+)
+
+st.area_chart(chart_data, x="col1", y="col2", color="col3")
+
+df = pd.DataFrame(np.random.randn(10, 20), columns=("col %d" % i for i in range(20)))
+
+st.dataframe(df.style.highlight_max(axis=0))
+
+chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["col1", "col2", "col3"])
+
+st.area_chart(
+   chart_data, x="col1", y=["col2", "col3"], color=["#FF0000", "#0000FF"]  # Optional
+)
+
+# Transpose data awal agar bisa di-append dengan label klaster
+data_transpose = np.transpose(data)
+
+# Append data awal dengan label klaster
+data_append = np.append(data_transpose, [kmeans.labels_], axis=0)
+
+# Kembalikan ke bentuk data awal
+data_after_clustering = np.transpose(data_append)
+
+# Konversi ke tabel data frame Pandas
+columns_klasterisasi = np.array(['X', 'Y', 'Klaster'])
+
+objek_klasterisasi = pd.DataFrame(data=data_after_clustering, index=index, columns=columns_klasterisasi)
+objek_klasterisasi
